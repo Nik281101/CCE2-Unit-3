@@ -1,0 +1,33 @@
+MEDICINE INVENTORY AND EXPIRY MANAGEMENT SYSTEM
+
+CCE2 - UNIT 3 
+
+Programming Language: C++ 
+
+Data Structure: Singly Linked List
+
+TEST RESULTS
+
+Test 1: Add Medicine Medicine ID: 4 
+Medicine Name: Paracetamol 
+Quantity: 50
+Expiry Date: 15-12-2026
+Result: Medicine added successfully. 
+Status: PASS
+Test 2: Search Medicine Medicine ID: 4
+Result: Medicine found successfully. 
+Status: PASS
+Test 3: Update Stock Medicine ID: 4 
+Old Quantity: 50 
+New Quantity: 75
+Result: Stock updated successfully.
+Status: PASS
+Test 4: Display Inventory Medicine ID: 4
+Medicine Name: Paracetamol
+Quantity: 75 
+Expiry Date: 15-12-2026 
+Status: PASS
+Test 5: Check Expiry Result: No medicines nearing expiry. 
+Status: PASS (no-match case)
+Test 6: Exit Result: Program exited successfully. 
+Status: PASS
