@@ -1,8 +1,13 @@
 1.Aim
+
 To develop a C++ application using a Singly Linked List to manage medicine inventory, search medicines, update stock, and identify medicines nearing expiry.
+
 2. Problem Statement
+
 Managing medicine stock manually can make it difficult to track quantities and expiry dates. This project provides a menu-driven system to manage medicine records using a Singly Linked List.
+
 3.Algorithm
+
 Start the program.
 Define a Medicine structure with medicine details and a pointer to the next node.
 Initialize the head pointer to NULL.
