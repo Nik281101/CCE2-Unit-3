@@ -1,4 +1,4 @@
-1.Aim
+ 1.Aim
 
 To develop a C++ application using a Singly Linked List to manage medicine inventory, search medicines, update stock, and identify medicines nearing expiry.
 
