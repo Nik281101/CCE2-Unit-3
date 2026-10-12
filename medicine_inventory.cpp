@@ -1,11 +1,11 @@
-
 #include <iostream>
 #include <string>
 #include <ctime>
 #include <iomanip>
 using namespace std;
 
-struct Medicine {
+struct Medicine 
+{
     int id, quantity;
     string name;
     int day, month, year;
@@ -14,7 +14,8 @@ struct Medicine {
 
 Medicine* head = nullptr;
 
-time_t makeDate(int d, int m, int y) {
+time_t makeDate(int d, int m, int y) 
+{
     tm date = {};
     date.tm_mday = d;
     date.tm_mon = m - 1;
@@ -24,15 +25,18 @@ time_t makeDate(int d, int m, int y) {
     return mktime(&date);
 }
 
-void addMedicine() {
+void addMedicine() 
+{
     Medicine* n = new Medicine;
 
     cout << "Enter Medicine ID: ";
     cin >> n->id;
 
     Medicine* p = head;
-    while (p != nullptr) {
-        if (p->id == n->id) {
+    while (p != nullptr) 
+{
+        if (p->id == n->id) 
+{
             cout << "Medicine ID already exists!\n";
             delete n;
             return;
@@ -62,9 +66,11 @@ void addMedicine() {
     cout << "Medicine added successfully!\n";
 }
 
-Medicine* searchMedicine(int id) {
+Medicine* searchMedicine(int id) 
+{
     Medicine* p = head;
-    while (p != nullptr) {
+    while (p != nullptr)
+ {
         if (p->id == id)
             return p;
         p = p->next;
@@ -72,30 +78,35 @@ Medicine* searchMedicine(int id) {
     return nullptr;
 }
 
-void search() {
+void search()
+ {
     int id;
     cout << "Enter Medicine ID to search: ";
     cin >> id;
 
     Medicine* p = searchMedicine(id);
-    if (p != nullptr) {
+    if (p != nullptr)
+ {
         cout << "Medicine Found!\n";
         cout << "Name: " << p->name
              << "\nQuantity: " << p->quantity
              << "\nExpiry: " << p->day << "-"
              << p->month << "-" << p->year << "\n";
-    } else {
+    } else 
+{
         cout << "Medicine not found!\n";
     }
 }
 
-void updateStock() {
+void updateStock() 
+{
     int id, qty;
     cout << "Enter Medicine ID: ";
     cin >> id;
 
     Medicine* p = searchMedicine(id);
-    if (p == nullptr) {
+    if (p == nullptr) 
+{
         cout << "Medicine not found!\n";
         return;
     }
@@ -103,7 +114,8 @@ void updateStock() {
     cout << "Enter new stock quantity: ";
     cin >> qty;
 
-    if (qty < 0) {
+    if (qty < 0) 
+{
         cout << "Quantity cannot be negative!\n";
         return;
     }
@@ -112,8 +124,10 @@ void updateStock() {
     cout << "Stock updated successfully!\n";
 }
 
-void display() {
-    if (head == nullptr) {
+void display() 
+{
+    if (head == nullptr) 
+{
         cout << "Inventory is empty!\n";
         return;
     }
@@ -121,7 +135,8 @@ void display() {
     cout << "\n--- Medicine Inventory ---\n";
     Medicine* p = head;
 
-    while (p != nullptr) {
+    while (p != nullptr) 
+{
         cout << "ID: " << p->id
              << " | Name: " << p->name
              << " | Quantity: " << p->quantity
@@ -131,7 +146,8 @@ void display() {
     }
 }
 
-void checkExpiry() {
+void checkExpiry()
+ {
     time_t now = time(nullptr);
     tm* todayPtr = localtime(&now);
     tm today = *todayPtr;
@@ -145,16 +161,19 @@ void checkExpiry() {
 
     cout << "\n--- Medicines Expiring Within 30 Days ---\n";
 
-    while (p != nullptr) {
+    while (p != nullptr)
+ {
         time_t expiry = makeDate(p->day, p->month, p->year);
         double days = difftime(expiry, todayTime) / 86400.0;
 
-        if (days >= 0 && days <= 30) {
+        if (days >= 0 && days <= 30) 
+{
             cout << p->name << " (ID: " << p->id
                  << ") expires in " << static_cast<int>(days)
                  << " days.\n";
             found = true;
-        } else if (days < 0) {
+        } else if (days < 0)
+ {
             cout << p->name << " (ID: " << p->id
                  << ") is EXPIRED.\n";
             found = true;
@@ -167,10 +186,12 @@ void checkExpiry() {
         cout << "No medicines nearing expiry.\n";
 }
 
-int main() {
+int main()
+ {
     int choice;
 
-    do {
+    do 
+{
         cout << "\n===== MEDICINE INVENTORY SYSTEM =====\n";
         cout << "1. Add Medicine\n";
         cout << "2. Search Medicine\n";
@@ -181,7 +202,8 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice) {
+        switch (choice) 
+{
             case 1: addMedicine(); break;
             case 2: search(); break;
             case 3: updateStock(); break;
@@ -192,7 +214,8 @@ int main() {
         }
     } while (choice != 6);
 
-    while (head != nullptr) {
+    while (head != nullptr)
+ {
         Medicine* temp = head;
         head = head->next;
         delete temp;
