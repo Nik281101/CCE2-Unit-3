@@ -4,7 +4,7 @@ To develop a C++ application using a Singly Linked List to manage medicine inven
 
 2. Problem Statement
 
-Managing medicine stock manually can make it difficult to track quantities and expiry dates. This project provides a menu-driven system to manage medicine records using a Singly Linked List.
+Develop a menu-driven C++ application to manage medicine records using a Singly Linked List. The system should allow users to add medicine details, display all records, search for a medicine, update stock quantities, identify medicines nearing expiry or already expired, and delete records. Each record contains a medicine ID, name, quantity, and expiry date. Dynamic nodes allow the number of records to change during execution.
 
 3.Algorithm
 
