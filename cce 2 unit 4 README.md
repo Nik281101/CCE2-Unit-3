@@ -1,5 +1,7 @@
 CCE-2-Unit-4
-
+Title 
+Develop an inventory management system using AVL tree. Insert product IDs,apply 
+LL,RR,LR and RL rotations when required,and display the balance factor.
 Aim
 
 A C++ Inventory Management System using an AVL Tree to store and manage product IDs efficiently. The project implements LL, RR, LR, and RL rotations to maintain tree balance, displays balance factors, supports product insertion and searching, and displays inventory in sorted order.
