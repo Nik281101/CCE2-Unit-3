@@ -28,6 +28,26 @@ Project overview
 
 Language: C++ Data structure: AVL Tree (self-balancing Binary Search Tree) Product ID: Used as the unique key for each product Features: Insert products, perform LL, RR, LR and RL rotations, display balance factors, and show products in sorted order.
 
+1.insert product
+Adds new product to the AVL tree.
+You enter the product ID, product name, and quantity.
+The tree checks the ID and inserts the product in the correct position.
+If the tree becomes unbalanced, it performs a rotation.
+
+2. Display Inventory
+Displays all stored products.
+Shows their IDs, names, quantities, and balance factors.
+Uses inorder traversal to display product IDs in ascending order.
+
+3. Search Product
+Searches for a product using its ID.
+If the ID exists, it displays the product details.
+Otherwise, it reports that the product was not found.
+
+5. Exit
+Terminates the program.
+Ends the menu loop.
+
 Conclusion
 
 This project demonstrates the practical application of AVL trees in inventory management. It combines product handling with self-balancing tree operations to maintain efficient insertion and searching while providing a clear demonstration of all four AVL rotation cases.
