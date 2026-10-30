@@ -1,0 +1,232 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <string>
+#include <limits>
+#include <algorithm>
+using namespace std;
+
+const int INF = numeric_limits<int>::max();
+
+struct Location {
+    string name;
+    string type;
+};
+
+struct Road {
+    int destination;
+    int distance;
+};
+
+class RoadNetwork {
+private:
+    vector<Location> locations;
+    vector<vector<Road>> adj;
+
+public:
+    RoadNetwork() {
+        locations = {
+            {"Fire Station A", "Fire Station"},
+            {"Fire Station B", "Fire Station"},
+            {"Central Junction", "Road Junction"},
+            {"Market Square", "Road Junction"},
+            {"City Hospital", "Emergency Location"},
+            {"School Junction", "Road Junction"},
+            {"River Bridge", "Road Junction"},
+            {"Residential Area", "Road Junction"},
+            {"Industrial Area", "Emergency Location"}
+        };
+
+        adj.resize(locations.size());
+
+        addRoad(0, 2, 4);
+        addRoad(0, 3, 7);
+        addRoad(1, 5, 3);
+        addRoad(1, 6, 6);
+        addRoad(2, 3, 2);
+        addRoad(2, 5, 5);
+        addRoad(2, 7, 8);
+        addRoad(3, 4, 6);
+        addRoad(3, 5, 3);
+        addRoad(4, 6, 4);
+        addRoad(5, 6, 2);
+        addRoad(5, 8, 7);
+        addRoad(6, 7, 3);
+        addRoad(6, 8, 5);
+        addRoad(7, 8, 4);
+    }
+
+    void addRoad(int u, int v, int distance) {
+        adj[u].push_back({v, distance});
+        adj[v].push_back({u, distance});
+    }
+
+    void displayLocations() {
+        cout << "\n--- AVAILABLE LOCATIONS ---\n";
+
+        for (int i = 0; i < locations.size(); i++) {
+            cout << i << ". " << locations[i].name
+                 << " [" << locations[i].type << "]\n";
+        }
+    }
+
+    void displayRoads() {
+        cout << "\n--- ROAD CONNECTIONS ---\n";
+
+        for (int i = 0; i < adj.size(); i++) {
+            for (const Road &r : adj[i]) {
+                if (i < r.destination) {
+                    cout << locations[i].name
+                         << " <--> "
+                         << locations[r.destination].name
+                         << " : " << r.distance << " km\n";
+                }
+            }
+        }
+    }
+
+    void displayFireStations() {
+        cout << "\n--- FIRE STATIONS ---\n";
+
+        for (int i = 0; i < locations.size(); i++) {
+            if (locations[i].type == "Fire Station")
+                cout << i << ". " << locations[i].name << "\n";
+        }
+    }
+
+    void displayEmergencyLocations() {
+        cout << "\n--- EMERGENCY LOCATIONS ---\n";
+
+        for (int i = 0; i < locations.size(); i++) {
+            if (locations[i].type == "Emergency Location")
+                cout << i << ". " << locations[i].name << "\n";
+        }
+    }
+
+    void findShortestRoute() {
+        int source, destination;
+
+        displayFireStations();
+        cout << "\nEnter Fire Station ID: ";
+        cin >> source;
+
+        if (source < 0 || source >= locations.size() ||
+            locations[source].type != "Fire Station") {
+            cout << "Invalid Fire Station ID!\n";
+            return;
+        }
+
+        displayEmergencyLocations();
+        cout << "\nEnter Emergency Location ID: ";
+        cin >> destination;
+
+        if (destination < 0 || destination >= locations.size() ||
+            locations[destination].type != "Emergency Location") {
+            cout << "Invalid Emergency Location ID!\n";
+            return;
+        }
+
+        int n = locations.size();
+
+        vector<int> dist(n, INF);
+        vector<int> parent(n, -1);
+
+        priority_queue<
+            pair<int, int>,
+            vector<pair<int, int>>,
+            greater<pair<int, int>>
+        > pq;
+
+        dist[source] = 0;
+        pq.push({0, source});
+
+        // Dijkstra's Algorithm
+        while (!pq.empty()) {
+            int currentDistance = pq.top().first;
+            int u = pq.top().second;
+            pq.pop();
+
+            if (currentDistance != dist[u])
+                continue;
+
+            for (const Road &r : adj[u]) {
+                int v = r.destination;
+                int newDistance = currentDistance + r.distance;
+
+                if (newDistance < dist[v]) {
+                    dist[v] = newDistance;
+                    parent[v] = u;
+                    pq.push({newDistance, v});
+                }
+            }
+        }
+
+        if (dist[destination] == INF) {
+            cout << "No route available!\n";
+            return;
+        }
+
+        // Reconstruct shortest path
+        vector<int> path;
+
+        for (int v = destination; v != -1; v = parent[v])
+            path.push_back(v);
+
+        reverse(path.begin(), path.end());
+
+        cout << "\n--- SHORTEST ROUTE ---\n";
+
+        for (int i = 0; i < path.size(); i++) {
+            cout << locations[path[i]].name;
+
+            if (i + 1 < path.size())
+                cout << " -> ";
+        }
+
+        cout << "\nMinimum Distance: "
+             << dist[destination] << " km\n";
+
+        cout << "Road Segments: "
+             << path.size() - 1 << "\n";
+    }
+};
+
+int main() {
+    RoadNetwork network;
+    int choice;
+
+    do {
+        cout << "\n===== FIRE STATION EMERGENCY ROUTE FINDER =====\n";
+        cout << "1. Display All Locations\n";
+        cout << "2. Display Road Connections\n";
+        cout << "3. Find Shortest Emergency Route\n";
+        cout << "4. Exit\n";
+
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                network.displayLocations();
+                break;
+
+            case 2:
+                network.displayRoads();
+                break;
+
+            case 3:
+                network.findShortestRoute();
+                break;
+
+            case 4:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
